@@ -22,9 +22,7 @@ def succ_alien(n, B):
     carry = 1
     for digit in rev_n :
         pos = (B.index(digit)+carry)%base
-        if pos == 0 : 
-            carry = 1
-        else : 
+        if pos!=0 : 
             carry = 0
         succ.append(B[pos])
     if carry == 1 :
