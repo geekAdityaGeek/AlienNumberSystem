@@ -1,39 +1,30 @@
-def validate(n, B):
-    '''
-    This validate number provided or not as per the base
-    '''
-    for digit in n :
-        if digit not in B :
+def compute_digit(n, B, digit_pos, carry):
+    if n[digit_pos] not in B :
             raise Exception("Digit not provided in base system") 
+    base = len(B)
+    base_pos = (B.index(n[digit_pos])+carry)%base
+    digit = B[base_pos]
+    new_carry = carry
+    if base_pos!=0 : 
+        new_carry = 0        
+    return digit, new_carry
+
+def compute_succ(n, B, digit_pos, carry):
+    if digit_pos<0:
+        if carry == 1 :
+            return B[carry]
+        else : 
+            return ''
+    new_digit, new_carry = compute_digit(n, B, digit_pos, carry)
+    return compute_succ(n, B, digit_pos-1, new_carry)+new_digit
 
 def succ_alien(n, B):
-    '''
-    This method finds the successor for the number n
-    for a given Base system - B
-    '''
-    base = len(B)
-    rev_n = [digit for digit in n]
-    rev_n.reverse()
-    succ = []
-    '''
-    In real original carry is 0 and 1 is added to n. To avoid complexity, 
-    1 is taken as a carry which will lead to same result
-    '''
-    carry = 1
-    for digit in rev_n :
-        pos = (B.index(digit)+carry)%base
-        if pos!=0 : 
-            carry = 0
-        succ.append(B[pos])
-    if carry == 1 :
-        succ.append(B[carry])
-    succ.reverse()
-    return "".join(succ)
+    succ = compute_succ(n,B, len(n)-1, 1)
+    return succ
 
 if __name__ == '__main__':    
     B = input('Enter Alien Base System : ')
     n = input('Enter Alien Number : ')
-    validate(n,B)
     succ = succ_alien(n, B)
     print('successor of {} is {}'.format(n, succ))
     
