@@ -5,7 +5,7 @@ def compute_digit(n, B, digit_pos, carry):
     '''
     #check whether digit belongs to base system or not
     if n[digit_pos] not in B :
-            raise Exception("Digit not provided in base system") 
+        raise Exception("Digit not provided in base system") 
     base = len(B)
     base_pos = (B.index(n[digit_pos])+carry)%base
     digit = B[base_pos]
@@ -16,17 +16,20 @@ def compute_digit(n, B, digit_pos, carry):
 
 def compute_succ(n, B, digit_pos, carry):
     '''
-    This method recursively computes the sucessor
     This traverses the digit from right to left and computes
-    the successor
+    the successor. It gets the digit and carry to proceed further 
+    to next digit on the left
     '''
-    if digit_pos<0:
-        if carry == 1 :
-            return B[carry]
-        else : 
-            return ''
-    new_digit, new_carry = compute_digit(n, B, digit_pos, carry)
-    return compute_succ(n, B, digit_pos-1, new_carry)+new_digit
+    succ_n = ''
+    curr_carry = carry
+    while digit_pos >= 0 :
+        new_digit, new_carry = compute_digit(n, B, digit_pos, curr_carry)
+        succ_n = new_digit+succ_n
+        curr_carry = new_carry
+        digit_pos = digit_pos - 1
+    if curr_carry == 1 :
+        return B[curr_carry]+succ_n
+    return succ_n
 
 def succ_alien(n, B):
     '''
