@@ -1,3 +1,11 @@
+def validate(n, B):
+    '''
+    This validate number provided or not as per the base
+    '''
+    for digit in n :
+        if digit not in B :
+            raise Exception("Digit not provided in base system") 
+
 def succ_alien(n, B):
     '''
     This method finds the successor for the number n
@@ -24,12 +32,10 @@ def succ_alien(n, B):
     succ.reverse()
     return "".join(succ)
 
-if __name__ == '__main__':
-
-    
+if __name__ == '__main__':    
     B = input('Enter Alien Base System : ')
     n = input('Enter Alien Number : ')
-
+    validate(n,B)
     succ = succ_alien(n, B)
     print('successor of {} is {}'.format(n, succ))
     
