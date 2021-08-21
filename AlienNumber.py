@@ -12,16 +12,22 @@ def compute_digit(n, B, digit_pos, carry):
     new_carry = carry
     if base_pos!=0 : 
         new_carry = 0        
-    return digit, new_carry
+    return digit, new_carry    
 
-def compute_succ(n, B, digit_pos, carry):
+def succ_alien(n, B):
     '''
+    This method computes the successor. For successor, 1 needs to 
+    be added to the number. 
+    For rightmost digit 1 has to be added and carry is 0.
+    Hence instead of keeping another operand, carry is set to 1.
     This traverses the digit from right to left and computes
     the successor. It gets the digit and carry to proceed further 
     to next digit on the left
+    
     '''
     succ_n = ''
-    curr_carry = carry
+    curr_carry = 1
+    digit_pos = len(n)-1
     while digit_pos >= 0 :
         new_digit, new_carry = compute_digit(n, B, digit_pos, curr_carry)
         succ_n = new_digit+succ_n
@@ -30,17 +36,7 @@ def compute_succ(n, B, digit_pos, carry):
     if curr_carry == 1 :
         return B[curr_carry]+succ_n
     return succ_n
-
-def succ_alien(n, B):
-    '''
-    This method computes the successor. For successor, 1 needs to 
-    be added to the number. 
-    For rightmost digit 1 has to be added and carry is 0.
-    Hence instead of keeping another operand, carry is set to 1.
-    '''
-    succ = compute_succ(n,B, len(n)-1, 1)
-    return succ
-
+    
 if __name__ == '__main__':    
     B = input('Enter Alien Base System : ')
     n = input('Enter Alien Number : ')
